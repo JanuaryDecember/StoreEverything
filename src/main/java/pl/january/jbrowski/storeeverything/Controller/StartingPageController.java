@@ -1,10 +1,20 @@
 package pl.january.jbrowski.storeeverything.Controller;
 
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import pl.january.jbrowski.storeeverything.Service.StartingPageService;
 
-@RestController
+@Controller
 public class StartingPageController {
-    private StartingPageService startingPageService;
+    private final StartingPageService startingPageService;
+
+    public StartingPageController(StartingPageService startingPageService) {
+        this.startingPageService = startingPageService;
+    }
+
+    @GetMapping("/StartingPage")
+    public String welcome() {
+        return startingPageService.welcome();
+    }
 
 }
