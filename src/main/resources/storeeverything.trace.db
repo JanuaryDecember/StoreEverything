@@ -1,0 +1,15 @@
+2023-05-23 23:03:16 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "CLIENT" już istnieje
+Table "CLIENT" already exists; SQL statement:
+CREATE TABLE Client ( id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255), surname VARCHAR(255), login VARCHAR(255), password VARCHAR(255), age VARCHAR(255) ) [42101-214]
+2023-05-23 23:04:04 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLIENT" not found (this database is empty); SQL statement:
+select c1_0.id,c1_0.age,c1_0.login,c1_0.name,c1_0.password,c1_0.surname from client c1_0 [42104-214]
+2023-05-23 23:16:51 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "CLIENT" już istnieje
+Table "CLIENT" already exists; SQL statement:
+CREATE TABLE Client ( id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255), surname VARCHAR(255), login VARCHAR(255), password VARCHAR(255), age VARCHAR(255) ) [42101-214]
+2023-05-23 23:17:07 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "CLIENT" już istnieje
+Table "CLIENT" already exists; SQL statement:
+CREATE TABLE Client ( id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255), surname VARCHAR(255), login VARCHAR(255), password VARCHAR(255), age VARCHAR(255) ) [42101-214]
