@@ -1,5 +1,5 @@
 package pl.january.jbrowski.storeeverything.Model;
-
+/*
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -7,20 +7,22 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
+
+ */
 public class User {
-    @Id
+    //@Id
     int id;
-    @Column
+   // @Column
     String name;
-    @Column
+   // @Column
     String surname;
-    @Column
+  //  @Column
     int age;
-    @Column
+   // @Column
     int phoneNumber;
-    @Column
+  //  @Column
     String email;
-    @Column
+   // @Column
     String address;
 
 }
