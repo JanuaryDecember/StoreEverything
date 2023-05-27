@@ -32,7 +32,7 @@ public class StartingPageController {
     public String showNotes(Model model) {
         List<Note> userNotes = noteService.getUserNotes();
         model.addAttribute("userNotes", userNotes);
-        return "StartingPage";
+        return "Welcome";
     }
 
     @PostMapping("/notes/add")
