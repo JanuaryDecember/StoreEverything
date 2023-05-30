@@ -1,12 +1,6 @@
 package pl.january.jbrowski.storeeverything.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +9,7 @@ import lombok.Setter;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "notes")
+@Table(name = "Notes")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,17 +19,20 @@ public class Note {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "title")
     private String title;
+    @Column(name = "user_Id")
+    private Long userrId;
     private String content;
+    private String publication_date;
     private String link;
-    private String creationDate;
     private String category;
-
-    public Note(String title, String content, String link, String creationDate, String category) {
+    public Note(String title, Long user_Id, String content, String link, String publication_date, String category) {
         this.title = title;
         this.content = content;
+        this.userrId = user_Id;
         this.link = link;
-        this.creationDate = LocalDate.now().toString();
+        this.publication_date = publication_date;
         this.category = category;
     }
 }

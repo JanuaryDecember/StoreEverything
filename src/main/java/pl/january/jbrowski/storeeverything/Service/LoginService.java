@@ -1,5 +1,6 @@
 package pl.january.jbrowski.storeeverything.Service;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -12,9 +13,11 @@ import java.util.Optional;
 @AllArgsConstructor
 public class LoginService {
     private final ClientRepository clientRepository;
-    public String login(String login, String password, Model model){
-        Optional<Client> client = clientRepository.findAll().stream().filter(a->(a.getLogin().equals(login) && a.getPassword().equals(password))).findFirst();
-        model.addAttribute("name", client.get().getName());
-        return "Welcome";
+
+    public String login(String login, String password, HttpSession httpSession) {
+        Optional<Client> client = clientRepository.findAll().stream().filter(a -> (a.getLogin().equals(login) && a.getPassword().equals(password))).findFirst();
+        httpSession.setAttribute("name", client.get().getName());
+        httpSession.setAttribute("user_Id", client.get().getId());
+        return "loggedin";
     }
 }

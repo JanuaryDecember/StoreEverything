@@ -1,16 +1,14 @@
 package pl.january.jbrowski.storeeverything.Controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.january.jbrowski.storeeverything.Model.Note;
 import pl.january.jbrowski.storeeverything.Service.NoteService;
 import pl.january.jbrowski.storeeverything.Service.StartingPageService;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -36,17 +34,17 @@ public class StartingPageController {
     }
 
     @PostMapping("/notes/add")
-    public String addNote(@ModelAttribute Note noteForm) {
+    public String addNote(@ModelAttribute Note noteForm, @RequestParam("user_Id") Long user_Id) {
+
         Note note = new Note(
                 noteForm.getTitle(),
+                user_Id,
                 noteForm.getContent(),
                 noteForm.getLink(),
-                LocalDate.now().toString(),
+                LocalDateTime.now().toString(),
                 noteForm.getCategory()
         );
-
-        noteService.addNote(note);
-        return "redirect:/notes";
+        return noteService.addNote(note);
     }
 
     @PostMapping("/notes/{id}/edit")
@@ -63,7 +61,12 @@ public class StartingPageController {
         return "redirect:/notes";
     }
 
-    @PostMapping("/notes/{id}/delete")
+    @GetMapping("/Welcome")
+    public String welc(Model model, HttpSession httpSession) {
+        return noteService.welc(model, httpSession);
+    }
+
+    @GetMapping("/notes/{id}/delete")
     public String deleteNote(@PathVariable("id") Long noteId) {
         noteService.deleteNoteById(noteId);
         return "redirect:/notes";

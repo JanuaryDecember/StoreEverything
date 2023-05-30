@@ -7,10 +7,12 @@ CREATE TABLE Client (
     age VARCHAR(255)
 );
 
-CREATE TABLE Information (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE Notes (
+    id LONG PRIMARY KEY AUTO_INCREMENT,
+    user_Id LONG REFERENCES Client(id),
     title VARCHAR(255),
     content VARCHAR(255),
     publication_date TIMESTAMP,
+    link VARCHAR(255),
     category VARCHAR(255)
 );

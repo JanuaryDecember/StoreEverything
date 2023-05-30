@@ -18,12 +18,14 @@ FROM
      SELECT 46 UNION SELECT 47 UNION SELECT 48 UNION SELECT 49 UNION SELECT 50) AS dummy;
 
 -- Generowanie danych dla tabeli Information
-INSERT INTO Information (title, content, publication_date, category)
+INSERT INTO Notes (title, content, user_Id, publication_date, link, category)
 SELECT
     CONCAT('Title', FLOOR(RAND() * 100)),
     CONCAT('Content', FLOOR(RAND() * 100)),
+    (FLOOR(RAND() * 50) + 1),
     NOW(),
-        CONCAT('Category', FLOOR(RAND() * 100))
+    CONCAT('Link', FLOOR(RAND()*100)),
+    CONCAT('Category', FLOOR(RAND() * 100))
 FROM
     (SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION
      SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10 UNION

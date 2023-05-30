@@ -91,7 +91,7 @@
        <td th:text="${note.title}"></td>
        <td th:text="${note.content}"></td>
        <td th:text="${note.link}"></td>
-       <td th:text="${note.creationDate}"></td>
+       <td th:text="${note.publication_date}"></td>
        <td th:text="${note.category}"></td>
        <td>
          <button class="edit-btn" th:attr="data-id=${note.id}">Edytuj</button>
@@ -108,10 +108,8 @@
     <input type="text" name="content" placeholder="Treść" required><br>
     <input type="text" name="link" placeholder="Link"><br>
     <input type="text" name="category" placeholder="Kategoria"><br>
+    <input type="hidden" name="user_Id" th:value="${user_Id}"><br>
     <button type="submit" class="add-btn">Dodaj notatkę</button>
 </form>
-
-
-
 </body>
 </html>
