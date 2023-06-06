@@ -13,7 +13,7 @@ public class SignUpService {
     private final ClientRepository clientRepository;
 
     public boolean registerUser(String username, String email, String password, String name) {
-        clientRepository.save(new Client(56L,username, email, password, name, "18"));
+        clientRepository.save(new Client(username, email, password, name, "18"));
         return true;
     }
     public String signUp(){

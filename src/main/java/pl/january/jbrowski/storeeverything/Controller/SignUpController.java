@@ -33,6 +33,6 @@ public class SignUpController {
         } else {
             model.addAttribute("errorMessage", "Registration failed. Please try again.");
         }
-        return "StartingPage";
+        return "redirect:/";
     }
 }

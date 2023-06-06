@@ -23,7 +23,7 @@ public class NoteService {
 
     public String addNote(Note note) {
         noteRepository.save(note);
-        return "redirect:/notes";
+        return "redirect:/Welcome";
     }
 
     public void updateNote(Note note) {
@@ -42,7 +42,7 @@ public class NoteService {
     public String welc(Model model, HttpSession httpSession) {
         model.addAttribute("name",httpSession.getAttribute("name"));
         model.addAttribute("user_Id",httpSession.getAttribute("user_Id"));
-        model.addAttribute("userNotes", noteRepository.findByUserrId((Long)model.getAttribute("user_Id")));
+        model.addAttribute("userNotes", noteRepository.findByClientid((Long)model.getAttribute("user_Id")));
         return "Welcome";
     }
 }

@@ -9,6 +9,7 @@ import pl.january.jbrowski.storeeverything.Service.NoteService;
 import pl.january.jbrowski.storeeverything.Service.StartingPageService;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -21,7 +22,7 @@ public class StartingPageController {
         this.noteService = noteService;
     }
 
-    @GetMapping("/StartingPage")
+    @GetMapping("/")
     public String welcome() {
         return startingPageService.welcome();
     }
@@ -41,7 +42,7 @@ public class StartingPageController {
                 user_Id,
                 noteForm.getContent(),
                 noteForm.getLink(),
-                LocalDateTime.now().toString(),
+                LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")).toString(),
                 noteForm.getCategory()
         );
         return noteService.addNote(note);
@@ -51,14 +52,14 @@ public class StartingPageController {
     public String editNote(@PathVariable("id") Long noteId, @ModelAttribute Note noteForm) {
         Note note = noteService.getNoteById(noteId);
         if (note == null) {
-            return "redirect:/notes";
+            return "redirect:/Welcome";
         }
         note.setTitle(noteForm.getTitle());
         note.setContent(noteForm.getContent());
         note.setLink(noteForm.getLink());
         note.setCategory(noteForm.getCategory());
         noteService.updateNote(note);
-        return "redirect:/notes";
+        return "redirect:/Welcome";
     }
 
     @GetMapping("/Welcome")
@@ -69,6 +70,6 @@ public class StartingPageController {
     @GetMapping("/notes/{id}/delete")
     public String deleteNote(@PathVariable("id") Long noteId) {
         noteService.deleteNoteById(noteId);
-        return "redirect:/notes";
+        return "redirect:/Welcome";
     }
 }

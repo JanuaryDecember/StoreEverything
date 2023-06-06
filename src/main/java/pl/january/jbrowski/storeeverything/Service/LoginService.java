@@ -16,8 +16,11 @@ public class LoginService {
 
     public String login(String login, String password, HttpSession httpSession) {
         Optional<Client> client = clientRepository.findAll().stream().filter(a -> (a.getLogin().equals(login) && a.getPassword().equals(password))).findFirst();
+        if(client.isEmpty()){
+            return "failedtologin";
+        }
         httpSession.setAttribute("name", client.get().getName());
         httpSession.setAttribute("user_Id", client.get().getId());
-        return "loggedin";
+        return "redirect:/Welcome";
     }
 }

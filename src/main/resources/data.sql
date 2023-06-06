@@ -1,10 +1,10 @@
 INSERT INTO Client (name, surname, login, password, age)
 SELECT
-    CONCAT('Name', FLOOR(RAND() * 100)),
-    CONCAT('Surname', FLOOR(RAND() * 100)),
-    CONCAT('login', FLOOR(RAND() * 100)),
-    CONCAT('password', FLOOR(RAND() * 100)),
-    CONCAT('Age', FLOOR(RAND() * 100))
+    CONCAT('Name', CAST(FLOOR(RAND() * 100)As INTEGER)),
+    CONCAT('Surname', CAST(FLOOR(RAND() * 100)As INTEGER)),
+    CONCAT('login', CAST(FLOOR(RAND() * 100)As INTEGER)),
+    CONCAT('password', CAST(FLOOR(RAND() * 100)As INTEGER)),
+    CAST(FLOOR(RAND() * 100)As INTEGER)
 FROM
     (SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION
      SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10 UNION
@@ -17,15 +17,22 @@ FROM
      SELECT 41 UNION SELECT 42 UNION SELECT 43 UNION SELECT 44 UNION SELECT 45 UNION
      SELECT 46 UNION SELECT 47 UNION SELECT 48 UNION SELECT 49 UNION SELECT 50) AS dummy;
 
--- Generowanie danych dla tabeli Information
-INSERT INTO Notes (title, content, user_Id, publication_date, link, category)
+-- Generowanie danych dla tabeli Note
+INSERT INTO Note (title, clientid, content, publicationdate, link, category)
 SELECT
-    CONCAT('Title', FLOOR(RAND() * 100)),
-    CONCAT('Content', FLOOR(RAND() * 100)),
+    CONCAT('Title', CAST(FLOOR(RAND() * 100)As INTEGER)),
     (FLOOR(RAND() * 50) + 1),
-    NOW(),
-    CONCAT('Link', FLOOR(RAND()*100)),
-    CONCAT('Category', FLOOR(RAND() * 100))
+    CONCAT('Content', CAST(FLOOR(RAND() * 100)As INTEGER)),
+    CONCAT(
+            LPAD(DAY(NOW()), 2, '0'), '-',
+            LPAD(MONTH(NOW()), 2, '0'), '-',
+            YEAR(NOW()), ' ',
+            LPAD(HOUR(NOW()), 2, '0'), ':',
+            LPAD(MINUTE(NOW()), 2, '0'), ':',
+            LPAD(SECOND(NOW()), 2, '0')
+        ),
+    CONCAT('Link', CAST(FLOOR(RAND() * 100)As INTEGER)),
+    CONCAT('Category', CAST(FLOOR(RAND() * 100)As INTEGER))
 FROM
     (SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION
      SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10 UNION
