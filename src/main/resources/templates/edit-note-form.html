@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Edytuj notatkę</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    form {
+      margin-bottom: 20px;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-bottom: 12px;
+    }
+
+    textarea {
+      height: 150px;
+    }
+
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Edytuj notatkę</h1>
+
+  <form action="/notes/{id}/edit" method="post" th:action="@{/notes/{id}/edit(id=${editedNote.id})}">
+    <input type="text" name="title" th:value="${noteForm.title}" required><br>
+    <input type="text" name="content" th:value="${noteForm.content}" required><br>
+    <input type="text" name="link" th:value="${noteForm.link}"><br>
+    <input type="text" name="category" th:value="${noteForm.category}"><br>
+    <input type="submit" value="Zatwierdź edycję">
+  </form>
+</div>
+</body>
+</html>

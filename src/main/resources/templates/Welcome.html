@@ -10,27 +10,48 @@
         margin: 0;
         padding: 20px;
     }
+
     h1 {
         text-align: center;
     }
+
     table {
         width: 100%;
         border-collapse: collapse;
         margin-bottom: 20px;
     }
+
     table, td {
         border: 1px solid black;
         padding: 8px;
     }
+
     th {
         border: 1px solid black;
         padding: 8px;
         background-color: #45a049;
         color: aliceblue;
     }
+
     form {
         margin-bottom: 20px;
+        max-width: 400px;
+        padding: 20px;
+        border-radius: 4px;
     }
+
+    input[type="text"],
+    select {
+        width: 100%;
+        padding: 8px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #fff;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
     input[type="submit"] {
         background-color: #4CAF50;
         color: white;
@@ -38,9 +59,11 @@
         border: none;
         cursor: pointer;
     }
+
     input[type="submit"]:hover {
         background-color: #45a049;
     }
+
     .edit-btn,
     .add-btn {
         background-color: #4CAF50;
@@ -50,6 +73,9 @@
         cursor: pointer;
         margin-right: 4px;
     }
+    .add-btn{
+        padding: 10px 20px;
+    }
     .delete-btn {
         background-color: #f44336;
         color: white;
@@ -58,26 +84,22 @@
         cursor: pointer;
         margin-right: 4px;
     }
+
     .edit-btn:hover,
     .add-btn {
         background-color: #45a049;
     }
+
     .delete-btn:hover {
         background-color: #d32f2f;
     }
 
-    /* Dodatkowe style */
     .container {
         max-width: 800px;
         margin: 0 auto;
     }
-    .notification {
-        background-color: #f44336;
-        color: white;
-        padding: 8px;
-        margin-bottom: 20px;
-        text-align: center;
-    }
+
+
 </style>
 <body>
 <div class = "container">
@@ -104,27 +126,39 @@
         <td th:text="${note.getPublicationdate}"></td>
         <td th:text="${note.category}"></td>
         <td>
-            <a th:href="@{/notes/{id}/edit(id=${note.id})}">
+            <a th:href="@{/notes/{id}/edit(id=${note.id})}" th:method="post">
                 <button class="edit-btn">Edytuj</button>
             </a>
-            <a th:href="@{/notes/{id}/delete(id=${note.id})}">
+            <a th:href="@{/notes/{id}/delete(id=${note.id})}" onclick="return confirmDelete()">
                 <button class="delete-btn">Usuń</button>
             </a>
         </td>
     </tr>
     </tbody>
 </table>
-
+<br><br>
 <!-- Adding note -->
 <h2>Dodaj notatkę</h2>
 <form action="/notes/add" method="post">
     <input type="text" name="title" placeholder="Tytuł" required><br>
     <input type="text" name="content" placeholder="Treść" required><br>
     <input type="text" name="link" placeholder="Link"><br>
-    <input type="text" name="category" placeholder="Kategoria"><br>
+    <select name="category">
+        <option value="">Wybierz kategorię</option>
+        <option value="Zakupy">Zakupy</option>
+        <option value="Test">Test</option>
+        <option value="Szkoła">Szkoła</option>
+        <option value="Hobby">Hobby</option>
+        <option value="Inne">Inne</option>
+    </select><br>
     <input type="hidden" name="user_Id" th:value="${user_Id}"><br>
     <button type="submit" class="add-btn">Dodaj notatkę</button>
 </form>
 </div>
 </body>
+<script>
+    function confirmDelete() {
+        return confirm("Czy na pewno chcesz usunąć notatkę?");
+    }
+</script>
 </html>

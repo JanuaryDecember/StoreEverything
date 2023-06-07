@@ -31,6 +31,7 @@ public class StartingPageController {
     public String showNotes(Model model) {
         List<Note> userNotes = noteService.getUserNotes();
         model.addAttribute("userNotes", userNotes);
+
         return "Welcome";
     }
 
@@ -48,10 +49,24 @@ public class StartingPageController {
         return noteService.addNote(note);
     }
 
-    @PostMapping("/notes/{id}/edit")
-    public String editNote(@PathVariable("id") Long noteId, @ModelAttribute Note noteForm) {
+    @GetMapping("/notes/{id}/edit")
+    public String showEditNoteForm(@PathVariable("id") Long noteId, Model model) {
         Note note = noteService.getNoteById(noteId);
         if (note == null) {
+            return "redirect:/Welcome";
+        }
+        model.addAttribute("editedNote", note);
+        model.addAttribute("noteForm", note);
+        return "edit-note-form";
+    }
+
+    @PostMapping("/notes/{id}/edit")
+    public String editNote(
+            @PathVariable("id") Long noteId,
+            @ModelAttribute("noteForm") Note noteForm,
+            @ModelAttribute("editedNote") Note editedNote) {
+        Note note = noteService.getNoteById(noteId);
+        if (note == null || editedNote == null || !note.getId().equals(editedNote.getId())) {
             return "redirect:/Welcome";
         }
         note.setTitle(noteForm.getTitle());
@@ -61,7 +76,6 @@ public class StartingPageController {
         noteService.updateNote(note);
         return "redirect:/Welcome";
     }
-
     @GetMapping("/Welcome")
     public String welc(Model model, HttpSession httpSession) {
         return noteService.welc(model, httpSession);
