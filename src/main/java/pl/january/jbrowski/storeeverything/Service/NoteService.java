@@ -1,13 +1,13 @@
 package pl.january.jbrowski.storeeverything.Service;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import pl.january.jbrowski.storeeverything.Model.Note;
 import pl.january.jbrowski.storeeverything.Repositories.NoteRepository;
 
-import java.util.Optional;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class NoteService {
@@ -38,11 +38,26 @@ public class NoteService {
         Optional<Note> optionalNote = noteRepository.findById(noteId);
         return optionalNote.orElse(null);
     }
+    public List<Note> getSortedNotes(String sortField, Sort.Direction direction, Long clientId) {
+        Sort sort = Sort.by(direction, sortField);
+        return noteRepository.findByClientid(clientId, sort);
+    }
+
 
     public String welc(Model model, HttpSession httpSession) {
-        model.addAttribute("name",httpSession.getAttribute("name"));
-        model.addAttribute("user_Id",httpSession.getAttribute("user_Id"));
-        model.addAttribute("userNotes", noteRepository.findByClientid((Long)model.getAttribute("user_Id")));
+        model.addAttribute("name", httpSession.getAttribute("name"));
+        model.addAttribute("user_Id", httpSession.getAttribute("user_Id"));
+
+        Sort.Direction defaultDirection = Sort.Direction.ASC;
+        String defaultSortField = "publicationdate";
+
+        Sort sort = Sort.by(defaultDirection, defaultSortField);
+        Long clientId = (Long) model.getAttribute("user_Id");
+        model.addAttribute("clientId", clientId);
+        model.addAttribute("userNotes", getSortedNotes(defaultSortField, defaultDirection, clientId));
+
         return "Welcome";
     }
+
+
 }

@@ -15,11 +15,11 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Note {
     @Id
-    @NotNull
+   // @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+   // @NotNull
     @Size(max = 100)
     @Column(name = "title")
     private String title;

@@ -98,62 +98,119 @@
         max-width: 800px;
         margin: 0 auto;
     }
+    .sort-btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 4px 8px;
+        border: none;
+        cursor: pointer;
+        margin-right: 4px;
+    }
+
+    .sort-btn:hover {
+        background-color: #45a049;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
 
 
 </style>
 <body>
 <div class = "container">
-<h1 th:text="'Witaj ' + ${name} + '!'"></h1>
+    <h1 th:text="'Witaj ' + ${name} + '!'"></h1>
 
-<!-- Notes table -->
-<h1 th:text="'Twoje notatki:'"></h1>
-<table>
-    <thead>
-    <tr>
-        <th>Tytuł</th>
-        <th>Treść</th>
-        <th>Link</th>
-        <th>Data dodania</th>
-        <th>Kategoria</th>
-        <th>Akcje</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="note : ${userNotes}">
-        <td th:text="${note.title}"></td>
-        <td th:text="${note.content}"></td>
-        <td th:text="${note.link}"></td>
-        <td th:text="${note.getPublicationdate}"></td>
-        <td th:text="${note.category}"></td>
-        <td>
-            <a th:href="@{/notes/{id}/edit(id=${note.id})}" th:method="post">
-                <button class="edit-btn">Edytuj</button>
-            </a>
-            <a th:href="@{/notes/{id}/delete(id=${note.id})}" onclick="return confirmDelete()">
-                <button class="delete-btn">Usuń</button>
-            </a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<br><br>
-<!-- Adding note -->
-<h2>Dodaj notatkę</h2>
-<form action="/notes/add" method="post">
-    <input type="text" name="title" placeholder="Tytuł" required><br>
-    <input type="text" name="content" placeholder="Treść" required><br>
-    <input type="text" name="link" placeholder="Link"><br>
-    <select name="category">
-        <option value="">Wybierz kategorię</option>
-        <option value="Zakupy">Zakupy</option>
-        <option value="Test">Test</option>
-        <option value="Szkoła">Szkoła</option>
-        <option value="Hobby">Hobby</option>
-        <option value="Inne">Inne</option>
-    </select><br>
-    <input type="hidden" name="user_Id" th:value="${user_Id}"><br>
-    <button type="submit" class="add-btn">Dodaj notatkę</button>
-</form>
+    <!-- Notes table -->
+    <h1 th:text="'Twoje notatki:'"></h1>
+
+    <!-- Sorting options -->
+    <div>
+        <div class="dropdown">
+            <button class="sort-btn">Sortuj</button>
+            <div class="dropdown-content">
+                <a th:href="@{/sort(sortField='title', sortOrder='asc', clientId=${clientId})}">Tytuł ▲</a>
+                <a th:href="@{/sort(sortField='title', sortOrder='desc', clientId=${clientId})}">Tytuł ▼</a>
+                <a th:href="@{/sort(sortField='publicationdate', sortOrder='asc', clientId=${clientId})}">Data dodania ▲</a>
+                <a th:href="@{/sort(sortField='publicationdate', sortOrder='desc', clientId=${clientId})}">Data dodania ▼</a>
+                <a th:href="@{/sort(sortField='category', sortOrder='asc', clientId=${clientId})}">Kategoria ▲</a>
+                <a th:href="@{/sort(sortField='category', sortOrder='desc', clientId=${clientId})}">Kategoria ▼</a>
+            </div>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Tytuł</th>
+            <th>Treść</th>
+            <th>Link</th>
+            <th>Data dodania</th>
+            <th>Kategoria</th>
+            <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="note : ${userNotes}">
+            <td th:text="${note.title}"></td>
+            <td th:text="${note.content}"></td>
+            <td th:text="${note.link}"></td>
+            <td th:text="${note.getPublicationdate}"></td>
+            <td th:text="${note.category}"></td>
+            <td>
+                <a th:href="@{/notes/{id}/edit(id=${note.id})}" th:method="post">
+                    <button class="edit-btn">Edytuj</button>
+                </a>
+                <a th:href="@{/notes/{id}/delete(id=${note.id})}" onclick="return confirmDelete()">
+                    <button class="delete-btn">Usuń</button>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <br><br>
+    <!-- Adding note -->
+    <h2>Dodaj notatkę</h2>
+    <form action="/notes/add" method="post">
+        <input type="text" name="title" placeholder="Tytuł" required><br>
+        <input type="text" name="content" placeholder="Treść" required><br>
+        <input type="text" name="link" placeholder="Link"><br>
+        <select name="category">
+            <option value="">Wybierz kategorię</option>
+            <option value="Zakupy">Zakupy</option>
+            <option value="Test">Test</option>
+            <option value="Szkoła">Szkoła</option>
+            <option value="Hobby">Hobby</option>
+            <option value="Inne">Inne</option>
+        </select><br>
+        <input type="hidden" name="user_Id" th:value="${user_Id}"><br>
+        <button type="submit" class="add-btn">Dodaj notatkę</button>
+    </form>
 </div>
 </body>
 <script>
