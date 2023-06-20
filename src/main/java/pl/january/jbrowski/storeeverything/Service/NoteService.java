@@ -38,8 +38,10 @@ public class NoteService {
         Optional<Note> optionalNote = noteRepository.findById(noteId);
         return optionalNote.orElse(null);
     }
-    public List<Note> getSortedNotes(String sortField, Sort.Direction direction, Long clientId) {
+    public List<Note> getSortedNotes(String sortField, Sort.Direction direction, Long clientId, Model model, HttpSession httpSession) {
         Sort sort = Sort.by(direction, sortField);
+        model.addAttribute("name", httpSession.getAttribute("name"));
+        model.addAttribute("user_Id", httpSession.getAttribute("user_Id"));
         return noteRepository.findByClientid(clientId, sort);
     }
 
@@ -47,15 +49,12 @@ public class NoteService {
     public String welc(Model model, HttpSession httpSession) {
         model.addAttribute("name", httpSession.getAttribute("name"));
         model.addAttribute("user_Id", httpSession.getAttribute("user_Id"));
-
         Sort.Direction defaultDirection = Sort.Direction.ASC;
         String defaultSortField = "publicationdate";
-
         Sort sort = Sort.by(defaultDirection, defaultSortField);
         Long clientId = (Long) model.getAttribute("user_Id");
         model.addAttribute("clientId", clientId);
-        model.addAttribute("userNotes", getSortedNotes(defaultSortField, defaultDirection, clientId));
-
+        model.addAttribute("userNotes", getSortedNotes(defaultSortField, defaultDirection, clientId, model, httpSession));
         return "Welcome";
     }
 

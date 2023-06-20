@@ -1,5 +1,6 @@
 package pl.january.jbrowski.storeeverything.Controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,12 +25,14 @@ public class SortNoteController {
     public ModelAndView getSortedNotes(
             @RequestParam(value = "sortField", defaultValue = "publicationdate") String sortField,
             @RequestParam(value = "sortOrder", defaultValue = "asc") String sortOrder,
-            @RequestParam(value = "clientId") Long clientId) {
+            @RequestParam(value = "clientId") Long clientId, Model model, HttpSession httpSession) {
         Sort.Direction direction = sortOrder.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
-        List<Note> sortedNotes = noteService.getSortedNotes(sortField, direction, clientId);
+        List<Note> sortedNotes = noteService.getSortedNotes(sortField, direction, clientId, model, httpSession);
         ModelAndView modelAndView = new ModelAndView("Welcome");
         modelAndView.addObject("userNotes", sortedNotes);
         modelAndView.addObject("clientId", clientId);
+        modelAndView.addObject("name", httpSession.getAttribute("name"));
+        modelAndView.addObject("user_Id", httpSession.getAttribute("user_Id"));
         return modelAndView;
     }
 }
