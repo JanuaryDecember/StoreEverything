@@ -1,6 +1,8 @@
 package pl.january.jbrowski.storeeverything.Model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,9 +15,12 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Note {
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
+    @Size(max = 100)
     @Column(name = "title")
     private String title;
     private Long clientid;
@@ -35,4 +40,6 @@ public class Note {
         this.publicationdate = publicationdate;
         this.category = category;
     }
+
+
 }

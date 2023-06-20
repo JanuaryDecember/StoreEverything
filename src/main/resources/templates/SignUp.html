@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
   <title>Sign Up Page</title>
   <style>
     body {
@@ -35,16 +35,18 @@
     input[type="submit"]:hover {
       background-color: #45a049;
     }
+
+    .unavailable {
+      color: red;
+    }
   </style>
 </head>
 <body>
 <h2>Sign Up</h2>
 <form action="/register" method="post">
   <label for="username">Username:</label>
-  <input type="text" id="username" name="username" required>
-
-  <label for="email">Email:</label>
-  <input type="email" id="email" name="email" required>
+  <input type="text" id="username" name="username">
+  <span th:if="${exists}" class="unavailable" th:text="'Username taken!'"></span>
 
   <label for="password">Password:</label>
   <input type="password" id="password" name="password" required>
@@ -52,7 +54,20 @@
   <label for="name">Name:</label>
   <input type="name" id="name" name="name" required>
 
+  <label for="surname">Surname:</label>
+  <input type="surname" id="surname" name="surname" required>
+
+
+  <label for="age">Age:</label>
+  <input type="number" id="age" name="age" required>
+
   <input type="submit" value="Sign Up">
 </form>
+
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  var exists = [[${exists}]];
+  /*]]>*/
+</script>
 </body>
 </html>

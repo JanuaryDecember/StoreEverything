@@ -3,7 +3,6 @@ package pl.january.jbrowski.storeeverything.Service;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import pl.january.jbrowski.storeeverything.Model.Client;
 import pl.january.jbrowski.storeeverything.Repositories.ClientRepository;
 
