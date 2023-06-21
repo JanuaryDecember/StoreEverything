@@ -197,7 +197,7 @@
     <!-- Adding note -->
     <h2>Dodaj notatkę</h2>
     <form action="/notes/add" method="post">
-        <input type="text" name="title" placeholder="Tytuł" required><br>
+        <input type="text" pattern="[A-Z][a-zA-Z]*" name="title" placeholder="Tytuł" required><br>
         <input type="text" name="content" placeholder="Treść" required><br>
         <input type="text" name="link" placeholder="Link"><br>
         <select name="category">
