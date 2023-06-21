@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +15,7 @@ import pl.january.jbrowski.storeeverything.Service.SignUpService;
 import java.util.Optional;
 
 @Controller
+@Validated
 @AllArgsConstructor
 public class SignUpController {
 
@@ -39,8 +41,14 @@ public class SignUpController {
             model.addAttribute("exists", true);
             return "SignUp";
         }
-
-        clientRepository.save(new Client(name, surname, username, password, age));
+        try{
+            Client client = new Client(name, surname, username, password, age);
+            clientRepository.save(client);
+        }
+        catch (Exception e){
+            model.addAttribute("failed", true);
+            return "SignUp";
+        }
         return "redirect:/";
     }
 }

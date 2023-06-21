@@ -44,6 +44,7 @@
 <body>
 <h2>Sign Up</h2>
 <form action="/register" method="post">
+  <span th:if="${failed}" class="unavailable" th:text="'There was a validation error! Try again but remember: Login and password needs to be longer than 4 and shorter than 120 !'"></span>
   <label for="username">Username:</label>
   <input type="text" id="username" name="username">
   <span th:if="${exists}" class="unavailable" th:text="'Username taken!'"></span>
