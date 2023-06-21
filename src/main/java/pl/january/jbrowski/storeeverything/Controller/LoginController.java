@@ -18,4 +18,8 @@ public class LoginController {
     public String login(@RequestParam("username") String username, @RequestParam("password") String password, HttpSession httpSession) {
         return loginService.login(username, password, httpSession);
     }
+    @PostMapping("/loginAdmin")
+    public String loginAdmin(@RequestParam("username") String username, @RequestParam("password") String password, HttpSession httpSession) {
+        return loginService.loginAdmin(username, password, httpSession);
+    }
 }

@@ -17,14 +17,15 @@
             max-width: 300px;
             margin: 0 auto;
         }
-        div {
+
+        div.button-group {
+            display: flex;
+            justify-content: space-between;
             max-width: 175px;
             margin: 0 auto;
-            display: flex;
         }
 
         label, input {
-
             display: block;
             margin-bottom: 10px;
         }
@@ -37,11 +38,10 @@
         input[type="submit"] {
             background-color: #4CAF50;
             color: white;
-            width: 0px;
+            width: 100px; /* Adjust the width as needed */
             padding: 10px 15px;
             border: none;
             cursor: pointer;
-            flex:1;
         }
 
         input[type="submit"]:hover {
@@ -54,8 +54,6 @@
             padding: 10px 15px;
             border: none;
             cursor: pointer;
-            margin-right: 10px;
-            flex: 1;
         }
 
         input[type="button"]:hover {
@@ -71,10 +69,12 @@
 
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" required>
-<div>
-    <input type="submit" value="Log In">
-    <a href="/signup"><input type="button" value="Sign up"></a>
-</div>
+
+    <div class="button-group">
+        <input type="submit" value="Log In">
+        <a href="/signup"><input type="button" value="Sign up"></a>
+        <a href="/AdminView"><input type="button" value="Log in as admin"></a>
+    </div>
 </form>
 </body>
 </html>

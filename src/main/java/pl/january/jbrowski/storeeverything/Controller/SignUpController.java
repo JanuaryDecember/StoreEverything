@@ -27,6 +27,10 @@ public class SignUpController {
     public String sgUp() {
         return signUpService.signUp();
     }
+    @GetMapping("/AdminView")
+    public String admViwe(){
+        return "AdminLogin";
+    }
 
     @PostMapping("/register")
     public String signUp(@Valid @RequestParam("username") String username,

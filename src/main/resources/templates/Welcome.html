@@ -202,11 +202,8 @@
         <input type="text" name="link" placeholder="Link"><br>
         <select name="category">
             <option value="">Wybierz kategorię</option>
-            <option value="Zakupy">Zakupy</option>
-            <option value="Test">Test</option>
-            <option value="Szkoła">Szkoła</option>
-            <option value="Hobby">Hobby</option>
-            <option value="Inne">Inne</option>
+            <option th:each="category : ${session.categories}" th:value="${category.id}" th:text="${category.name}"></option>
+        </select>
         </select><br>
         <input type="hidden" name="user_Id" th:value="${user_Id}"><br>
         <button type="submit" class="add-btn">Dodaj notatkę</button>

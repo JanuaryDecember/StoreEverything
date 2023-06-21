@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .admin-panel {
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .admin-panel button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .admin-panel button:last-child {
+            margin-bottom: 0;
+        }
+
+        .user-list {
+            margin-top: 20px;
+        }
+
+        .user-list-item {
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<h2>Admin Panel</h2>
+<div class="admin-panel">
+    <button onclick="deleteUser()">Usuń użytkownika</button>
+    <button onclick="addCategory()">Dodaj kategorię</button>
+    <button onclick="deleteCategory()">Usuń kategorię</button>
+    <button onclick="deleteCategoryByName()">Usuń kategorię po nazwie</button>
+    <button onclick="displayUsers()">Wyświetl użytkowników</button>
+</div>
+
+<div class="user-list">
+    <h3>Lista użytkowników:</h3>
+    <ul id="user-list"></ul>
+</div>
+
+<div id="user-details"></div>
+
+
+<script>
+    function deleteUser() {
+        const userId = prompt("Podaj ID użytkownika do usunięcia:");
+        if (userId) {
+            fetch(`/admin/users/${userId}`, { method: 'DELETE' })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Użytkownik został usunięty.");
+                    } else {
+                        alert("Wystąpił błąd podczas usuwania użytkownika.");
+                    }
+                })
+                .catch(error => {
+                    alert("Wystąpił błąd podczas komunikacji z serwerem.");
+                });
+        }
+    }
+
+    function addCategory() {
+        const categoryName = prompt("Podaj nazwę nowej kategorii:");
+        if (categoryName) {
+            const category = { name: categoryName };
+            fetch('/admin/categories', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(category)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert("Nowa kategoria została dodana.");
+                })
+                .catch(error => {
+                    alert("Wystąpił błąd podczas dodawania kategorii.");
+                });
+        }
+    }
+
+    function deleteCategory() {
+        const categoryId = prompt("Podaj ID kategorii do usunięcia:");
+        if (categoryId) {
+            fetch(`/admin/categories/${categoryId}`, { method: 'DELETE' })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Kategoria została usunięta.");
+                    } else {
+                        alert("Wystąpił błąd podczas usuwania kategorii.");
+                    }
+                })
+                .catch(error => {
+                    alert("Wystąpił błąd podczas komunikacji z serwerem.");
+                });
+        }
+    }
+
+    function deleteCategoryByName() {
+        const categoryName = prompt("Podaj nazwę kategorii do usunięcia:");
+        if (categoryName) {
+            fetch(`/admin/categories?name=${encodeURIComponent(categoryName)}`, {method: 'DELETE'})
+                .then(response => {
+                    if (response.ok) {
+                        alert("Kategoria została usunięta.");
+                    } else {
+                        alert("Wystąpił błąd podczas usuwania kategorii.");
+                    }
+                })
+                .catch(error => {
+                    alert("Wystąpił błąd podczas komunikacji z serwerem.");
+                });
+        }
+    }
+    function displayUsers() {
+        fetch("/getUsers")
+            .then(response => response.json())
+            .then(data => {
+                const userList = document.getElementById("user-list");
+                userList.innerHTML = "";
+                data.forEach(user => {
+                    const listItem = document.createElement("li");
+                    listItem.textContent = user.login;
+                    listItem.classList.add("user-list-item");
+                    listItem.addEventListener("click", () => {
+                        showUserDetails(user.id);
+                    });
+                    userList.appendChild(listItem);
+                });
+            })
+            .catch(error => {
+                alert("Wystąpił błąd podczas pobierania użytkowników.");
+            });
+    }
+
+    function showUserDetails(userId) {
+        const userDetails = document.getElementById("user-details");
+        userDetails.textContent = "ID użytkownika: " + userId;
+    }
+</script>
+</body>
+</html>
